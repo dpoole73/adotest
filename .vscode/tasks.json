@@ -1,0 +1,13 @@
+{
+    "label": "build",
+    "command": "go",
+    "type": "shell",
+    "group": "build",
+    "args": [
+        "build",
+        "-o",
+        "${workspaceFolder}/bin/adotest",
+        "${workspaceFolder}/cmd"
+    ],
+    "problemMatcher": []
+}
