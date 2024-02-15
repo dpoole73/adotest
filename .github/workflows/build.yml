@@ -12,18 +12,18 @@ permissions:
   contents: read
 
 jobs:
-  build-vwatch:
-    name: Build (${{ matrix.os }}-${{ matrix.arch }})
-    runs-on: ubuntu-latest
+  build:
+    name: Build (${{ matrix.os }}
 
     strategy:
       # let us get failures from other jobs even if one fails
       fail-fast: false
+      matrix:
+        os: [windows, linux]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Apt-Get Update
-        run: sudo apt-get update
-
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
@@ -89,9 +89,5 @@ jobs:
       - name: run tests
         run: bash ./run_tests_with_coverage.sh
 
-      - name: Upload code coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          file: ./output/coverage/coverage.txt
 
 
