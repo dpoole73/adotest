@@ -2,12 +2,12 @@ package main
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
-func TestMain(m *testing.M) {
+func TestMain(t *testing.T) {
 	got := Hello()
 	want := "Hello, world"
-    if got != want {
-		m.Errorf("got %q want %q", got, want)
-	}
+	require.Equal(t, got, want)
 }
