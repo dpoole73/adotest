@@ -89,4 +89,9 @@ jobs:
       - name: run tests
         run: bash ./run_tests_with_coverage.sh
 
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          file: ./output/coverage/coverage.txt
+
 
