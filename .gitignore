@@ -21,3 +21,6 @@
 go.work
 
 bin/
+
+/output/*
+!/output/README.md
