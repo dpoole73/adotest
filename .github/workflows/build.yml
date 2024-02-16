@@ -19,7 +19,7 @@ jobs:
       # let us get failures from other jobs even if one fails
       fail-fast: false
       matrix:
-        os: [windows, linux]
+        os: [windows-latest, ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
