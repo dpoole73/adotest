@@ -80,18 +80,41 @@ jobs:
           GOARCH: arm64
           CGO_ENABLED: 0
 
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
-        with:
-          args: ./...
-
-      - name: Run static check
-        uses: dominikh/staticcheck-action@v1.3.0
-        with:
-          version: "2022.1.3"
-
       - name: run tests
         run: bash ./run_tests_with_coverage.sh
+
+  staticchecks:
+    name: Static Checks
+
+    strategy:
+      # let us get failures from other jobs even if one fails
+      fail-fast: false
+
+    # only run this on ubuntu since it is just inspecting the code and the commandline on windows gives errors
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+          submodules: true
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.0'
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: run gosec
+        run: $(go env GOPATH)/bin/gosec ./...
+
+      - name: run staticcheck
+        run: $(go env GOPATH)/bin/staticcheck ./...
 
 
 
