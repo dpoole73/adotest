@@ -80,11 +80,15 @@ jobs:
           GOARCH: arm64
           CGO_ENABLED: 0
 
-      - name: run gosec
-        run: $(go env GOPATH)/bin/gosec ./...
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
 
-      - name: run gosec
-        run: $(go env GOPATH)/bin/staticcheck ./...
+      - name: Run static check
+        uses: dominikh/staticcheck-action@v1.3.0
+        with:
+          version: "2022.1.3"
 
       - name: run tests
         run: bash ./run_tests_with_coverage.sh
